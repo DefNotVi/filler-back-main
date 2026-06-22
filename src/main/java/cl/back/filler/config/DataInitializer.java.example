@@ -1,0 +1,29 @@
+package cl.back.filler.config;
+
+import cl.back.filler.model.WaifuHusbando;
+import cl.back.filler.repository.PerfilRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DataInitializer implements CommandLineRunner {
+
+    private final PerfilRepository perfilRepository;
+
+    public DataInitializer(PerfilRepository perfilRepository) {
+        this.perfilRepository = perfilRepository;
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Al encenderse la app, si la BD está vacía, mete los memes
+        if (perfilRepository.count() == 0) {
+            perfilRepository.save(new WaifuHusbando(null, "Shrek", "Shrek (El anime)", "Cebollas, pantanos y rock & roll. Busco a mi Fiona.", "https://i.imgur.com/ZrGLHgC.jpeg", 8));
+            perfilRepository.save(new WaifuHusbando(null, "Satoru Gojo", "Jujutsu Kaisen", "El más fuerte. Si me das un dulce, te paso la tarea.", "https://i.imgur.com/8jV8WXd.jpeg", 2));
+            perfilRepository.save(new WaifuHusbando(null, "Programador C++", "La Vida Real", "Uso Linux. No me he bañado desde el último commit a producción.", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500", 10));
+            perfilRepository.save(new WaifuHusbando(null, "Yugi Muto", "Yu-Gi-Oh!", "Si no crees en el corazón de las cartas, dale a la izquierda.", "https://i.imgur.com/Gc4NwaP.jpeg", 4));
+            
+            System.out.println("¡Base de datos H2 inicializada con perfiles geek con éxito!");
+        }
+    }
+}
