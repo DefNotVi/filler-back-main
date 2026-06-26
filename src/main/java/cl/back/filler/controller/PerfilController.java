@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/perfiles")
-@CrossOrigin(origins = "*") // Permite que tu frontend en Vite (localhost:5173) se conecte sin problemas de CORS
+//@CrossOrigin(origins = "*") // Permite que tu frontend en Vite (localhost:5173) se conecte sin problemas de CORS
 public class PerfilController {
 
     private final PerfilRepository perfilRepository;
