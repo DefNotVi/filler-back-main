@@ -13,7 +13,7 @@ public class PerfilService {
     private final List<WaifuHusbando> perfiles = new ArrayList<>();
 
     public PerfilService() {
-        // Quemamos datos de prueba graciosos
+        // Quema datos de prueba 
         perfiles.add(new WaifuHusbando(1L, "Shrek", "Shrek (El anime)", "Cebollas, pantanos y rock & roll. Busco a mi Fiona o a un burro que no deje de hablar.", "https://via.placeholder.com/300x400?text=Shrek+Guapo", 8));
         perfiles.add(new WaifuHusbando(2L, "Satoru Gojo", "Jujutsu Kaisen", "El más fuerte, pero sobre todo, el que tiene más flow. Si me das un dulce, te paso la tarea.", "https://via.placeholder.com/300x400?text=Gojo", 2));
         perfiles.add(new WaifuHusbando(3L, "Programador Senior C++", "La Vida Real", "Busco a alguien que entienda mis punteros. No me he bañado desde el último commit de producción. Uso Linux de paso.", "https://via.placeholder.com/300x400?text=Senior+CPlusPlus", 10));

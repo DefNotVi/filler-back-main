@@ -9,15 +9,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity                   // <- Esto le dice a Spring que es una tabla de BD
+@Entity                  
 @Table(name = "perfiles") // <- Nombre de la tabla en H2
-@Data                     // <- Lombok genera Getters, Setters y toString automáticamente
-@NoArgsConstructor        // <- Lombok genera el constructor vacío que exige JPA
-@AllArgsConstructor       // <- Lombok genera el constructor con todos los atributos
+@Data                     
+@NoArgsConstructor       
+@AllArgsConstructor       
 public class WaifuHusbando {
 
-    @Id                                                 // <- Define la Clave Primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // <- ID Autoincremental (1, 2, 3...)
+    @Id                                                 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
     
     private String nombre;

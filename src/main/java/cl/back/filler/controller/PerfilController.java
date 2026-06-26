@@ -12,25 +12,26 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/perfiles")
-//@CrossOrigin(origins = "*") // Permite que tu frontend en Vite (localhost:5173) se conecte sin problemas de CORS
+//@CrossOrigin(origins = "*") // Permite que el frontend en Vite se conecte sin problemas de CORS
+//comenté lo de arriba porque al contrario de lo que puse al inicio, ahora da error con el api gateway sdfjhljksfd
 public class PerfilController {
 
     private final PerfilRepository perfilRepository;
 
-    // Inyectamos el repositorio para interactuar con la Base de Datos H2
+    // Inyecta el repositorio para interactuar con la Base de Datos H2
     public PerfilController(PerfilRepository perfilRepository) {
         this.perfilRepository = perfilRepository;
     }
 
     // GET: http://localhost:8080/api/perfiles
-    // El frontend llamará aquí para cargar la lista de cartas con las URLs de internet reales
+    // El frontend llama aquí para cargar la lista de cartas con las URLs de verdad
     @GetMapping
     public List<WaifuHusbando> listarPerfiles() {
         return perfilRepository.findAll();
     }
 
     // GET: http://localhost:8080/api/perfiles/proxy-image?url=...
-    // Descarga la imagen desde internet por detrás para evadir bloqueos de CORS o Hotlinking
+    // Descarga la imagen desde internet por detrás para evadir bloqueos de CORS u otra cosa
     @GetMapping("/proxy-image")
     public ResponseEntity<byte[]> proxyImagen(@RequestParam String url) {
         try {
@@ -47,7 +48,7 @@ public class PerfilController {
     }
 
     // POST: http://localhost:8080/api/perfiles/reaccion
-    // El frontend enviará aquí la decisión (LIKE o DISLIKE)
+    // El frontend envia aquí la decisión (LIKE o DISLIKE)
     @PostMapping("/reaccion")
     public Map<String, String> reaccionarAPerfil(@RequestBody Map<String, Object> payload) {
         Long perfilId = Long.valueOf(payload.get("perfilId").toString());
@@ -57,7 +58,7 @@ public class PerfilController {
         if ("LIKE".equalsIgnoreCase(accion)) {
             System.out.println("Le diste corazón al ID: " + perfilId);
             
-            // Simulamos un Match aleatorio del 50% para hacerlo divertido
+            // Simula un Match aleatorio del 50% para hacerlo divertido
             boolean esMatch = Math.random() > 0.5; 
             return Map.of(
                 "status", "ok",
@@ -65,7 +66,7 @@ public class PerfilController {
             );
         } else {
             System.out.println("Rechazaste al ID: " + perfilId);
-            return Map.of("status", "ok", "mensaje", "Enviado a la friendzone intergaláctica.");
+            return Map.of("status", "ok", "mensaje", "shiiiiiiiizaaaaaa");
         }
     }
 }
