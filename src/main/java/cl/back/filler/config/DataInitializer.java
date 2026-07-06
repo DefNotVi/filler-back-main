@@ -26,7 +26,7 @@ public class DataInitializer implements CommandLineRunner {
             perfilRepository.save(new WaifuHusbando(null, "Star Platinum", "Jojo's Bizarre Adventure: Stardust Crusaders", "ora, ora ora, ora.", "https://i.imgur.com/pm0m6gd.png", 3));
             perfilRepository.save(new WaifuHusbando(null, "El genio", "Aladin", "Cumplo tus deseos en la cama.", "https://i.imgur.com/1JS2bBS.png", 2));
             perfilRepository.save(new WaifuHusbando(null, "Gayrio y gaygi", "Super Homo bros", "Te vamos a examinar la tubería.", "https://i.imgur.com/SkcJQqU.png", 4));
-            perfilRepository.save(new WaifuHusbando(null, "Iggy", "Yu-Gi-Oh!", "Te voy a morder el chicle de café.", "https://i.imgur.com/DLroZZM.png", 2));
+            perfilRepository.save(new WaifuHusbando(null, "Iggy", "Jojo's Bizarre Adventure: Stardust Crusaders", "Te voy a morder el chicle de café.", "https://i.imgur.com/DLroZZM.png", 2));
             perfilRepository.save(new WaifuHusbando(null, "Franky", "One piece", "No sé no me vi one piece sdkjfhlskjdfhljkdf", "https://i.imgur.com/VAdKzeg.png", 2));
             perfilRepository.save(new WaifuHusbando(null, "Joseph Joestar", "Jojo's bizarre adventure: Batlle Tendency", "La siguiente palabra que dirás es: Sal conmigo.", "https://i.imgur.com/beWKYRi.jpeg", 2));
 
