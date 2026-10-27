@@ -1,56 +1,68 @@
 package cl.back.filler.controller;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import cl.back.filler.config.RabbitMQConfig;
+import cl.back.filler.service.MessagePublisherService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import cl.back.filler.config.RabbitMQConfig;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
-// @CrossOrigin(origins = "http://localhost:5173")
 public class OrderController {
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private final MessagePublisherService publisherService;
+
+    public OrderController(MessagePublisherService publisherService) {
+        this.publisherService = publisherService;
+    }
 
     @PostMapping("/send")
-    public Map<String, String> sendOrder(@RequestBody Map<String, String> payload) {
-        String orderId = payload.getOrDefault("orderId", "ORD-" + System.currentTimeMillis());
-        String customerName = payload.getOrDefault("customerName", "Unknown");
-
-        String message = String.format(
-            "Orden ID: %s | Cliente: %s | Hora: %s",
-            orderId,
-            customerName,
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+    public ResponseEntity<Map<String, String>> sendOrder(@RequestBody OrderRequest request) {
+        publisherService.sendMessage(
+                RabbitMQConfig.EXCHANGE_NAME,
+                RabbitMQConfig.ROUTING_KEY,
+                request
         );
-
-        // Enviar al Exchange (el routing automático se encarga del resto)
-        rabbitTemplate.convertAndSend(
-            RabbitMQConfig.ORDERS_EXCHANGE,
-            RabbitMQConfig.ORDERS_ROUTING_KEY,
-            message
-        );
-
-        Map<String, String> response = new HashMap<>();
-        response.put("status", "Orden enviada");
-        response.put("orderId", orderId);
-        response.put("message", message);
-        return response;
+        return ResponseEntity.ok(Map.of("status", "ok", "message", "Evento recibido y publicado en RabbitMQ"));
     }
 
     @GetMapping("/status")
-    public Map<String, String> getStatus() {
-        Map<String, String> status = new HashMap<>();
-        status.put("backend", "Online");
-        status.put("rabbitmq", "Conectado");
-        status.put("timestamp", LocalDateTime.now().toString());
-        return status;
+    public ResponseEntity<Map<String, String>> status() {
+        return ResponseEntity.ok(Map.of("status", "ONLINE", "message", "Servicio de órdenes funcionando correctamente"));
+    }
+
+    // DTO interno con Getters/Setters (Gracias Lombok por tan poco...)
+    public static class OrderRequest {
+        private String orderId;
+        private String customerName;
+        private String detalles;
+
+        public OrderRequest() {
+        }
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
+        public String getCustomerName() {
+            return customerName;
+        }
+
+        public void setCustomerName(String customerName) {
+            this.customerName = customerName;
+        }
+
+        public String getDetalles() {
+            return detalles;
+        }
+
+        public void setDetalles(String detalles) {
+            this.detalles = detalles;
+        }
     }
 }
