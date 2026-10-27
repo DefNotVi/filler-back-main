@@ -3,15 +3,18 @@ package cl.back.filler.service;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class RabbitResourceManager {
 
     private final RabbitAdmin rabbitAdmin;
+
+    // Constructor 
+    public RabbitResourceManager(RabbitAdmin rabbitAdmin) {
+        this.rabbitAdmin = rabbitAdmin;
+    }
 
     public void createQueue(String queueName) {
         try {

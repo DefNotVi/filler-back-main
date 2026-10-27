@@ -1,43 +1,29 @@
 package cl.back.filler.controller;
 
+import cl.back.filler.dto.QueueDTO;
+import cl.back.filler.service.RabbitResourceManager;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import cl.back.filler.service.RabbitResourceManager;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/rabbitmq")
-@RequiredArgsConstructor
 public class RabbitMQController {
 
     private final RabbitResourceManager resourceManager;
 
+    @Autowired
+    public RabbitMQController(RabbitResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
+    }
+
     @PostMapping("/queues")
-    public ResponseEntity<String> createQueue(@RequestParam String queueName) {
-        resourceManager.createQueue(queueName);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Cola '" + queueName + "' creada exitosamente");
-    }
-
-    @PostMapping("/exchanges")
-    public ResponseEntity<String> createExchange(@RequestParam String exchangeName) {
-        resourceManager.createExchange(exchangeName);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Exchange '" + exchangeName + "' creado exitosamente");
-    }
-
-    @PostMapping("/bindings")
-    public ResponseEntity<String> createBinding(
-            @RequestParam String queueName,
-            @RequestParam String exchangeName,
-            @RequestParam String routingKey) {
-        resourceManager.createBinding(queueName, exchangeName, routingKey);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Binding creado: " + queueName + " <-> " + exchangeName);
-    }
-
-    @GetMapping("/queues/{queueName}")
-    public ResponseEntity<?> getQueueInfo(@PathVariable String queueName) {
-        var info = resourceManager.getQueueInfo(queueName);
-        return info != null ? ResponseEntity.ok(info) : ResponseEntity.notFound().build();
+    public ResponseEntity<String> createQueue(@Valid @RequestBody QueueDTO dto) {
+        resourceManager.createQueue(dto.getQueueName());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Cola '" + dto.getQueueName() + "' creada exitosamente");
     }
 
     @DeleteMapping("/queues/{queueName}")
@@ -46,9 +32,9 @@ public class RabbitMQController {
         return ResponseEntity.ok("Cola '" + queueName + "' eliminada");
     }
 
-    @PostMapping("/queues/{queueName}/purge")
-    public ResponseEntity<String> purgeQueue(@PathVariable String queueName) {
-        resourceManager.purgeQueue(queueName);
-        return ResponseEntity.ok("Cola '" + queueName + "' purgada");
+    @GetMapping("/queues/{queueName}")
+    public ResponseEntity<?> getQueueInfo(@PathVariable String queueName) {
+        var info = resourceManager.getQueueInfo(queueName);
+        return info != null ? ResponseEntity.ok(info) : ResponseEntity.notFound().build();
     }
 }

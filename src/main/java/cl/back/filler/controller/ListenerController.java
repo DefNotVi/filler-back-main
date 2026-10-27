@@ -3,14 +3,17 @@ package cl.back.filler.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import cl.back.filler.service.ListenerManagementService;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/listeners")
-@RequiredArgsConstructor
 public class ListenerController {
 
     private final ListenerManagementService listenerService;
+
+    // Constructor (DAMN YOU LOMBOK!!!1!)
+    public ListenerController(ListenerManagementService listenerService) {
+        this.listenerService = listenerService;
+    }
 
     @GetMapping
     public ResponseEntity<Object> getAllListeners() {

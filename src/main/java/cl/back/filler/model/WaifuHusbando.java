@@ -5,15 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity                  
-@Table(name = "perfiles") // <- Nombre de la tabla en H2
+@Table(name = "perfiles")
 @Data                     
-@NoArgsConstructor       
-@AllArgsConstructor       
 public class WaifuHusbando {
 
     @Id                                                 
@@ -25,4 +21,18 @@ public class WaifuHusbando {
     private String descripcion;
     private String fotoUrl;
     private int nivelDeOlor; 
+
+    // Constructor vacío manual
+    public WaifuHusbando() {
+    }
+
+    // Constructor completo manual (te amo tanto lombok pero te odio tanto lombok)
+    public WaifuHusbando(Long id, String nombre, String animeOOrigen, String descripcion, String fotoUrl, int nivelDeOlor) {
+        this.id = id;
+        this.nombre = nombre;
+        this.animeOOrigen = animeOOrigen;
+        this.descripcion = descripcion;
+        this.fotoUrl = fotoUrl;
+        this.nivelDeOlor = nivelDeOlor;
+    }
 }
