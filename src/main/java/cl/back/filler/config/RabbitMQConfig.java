@@ -3,8 +3,10 @@ package cl.back.filler.config;
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
+@Profile("rabbit")
 public class RabbitMQConfig {
 
     public static final String EXCHANGE_NAME = "app.direct.exchange";
