@@ -22,7 +22,8 @@ public class KafkaEventListener {
     @RetryableTopic(
             attempts = "3",
             backoff = @Backoff(delay = 2000, multiplier = 2.0),
-            autoCreateTopics = "true"
+            autoCreateTopics = "true",
+            replicationFactor = "3"
     )
     @KafkaListener(
             topics = KafkaTopicConfig.TOPIC_REACCIONES,
@@ -57,7 +58,8 @@ public class KafkaEventListener {
     @RetryableTopic(
             attempts = "3",
             backoff = @Backoff(delay = 2000, multiplier = 2.0),
-            autoCreateTopics = "true"
+            autoCreateTopics = "true",
+            replicationFactor = "3"
     )
     @KafkaListener(
             topics = KafkaTopicConfig.TOPIC_ANALITICA,

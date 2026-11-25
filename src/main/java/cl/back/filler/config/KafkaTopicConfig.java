@@ -17,7 +17,7 @@ public class KafkaTopicConfig {
     public NewTopic reaccionesTopic() {
         return TopicBuilder.name(TOPIC_REACCIONES)
                 .partitions(3) // 3 particiones para balanceo de carga con consumer groups
-                .replicas(1)   // 1 réplica (porque tenemos 1 broker en docker-compose)
+                .replicas(3)   // 3 replica 
                 .config(TopicConfig.RETENTION_MS_CONFIG, "604800000") // Retención de 7 días
                 .config(TopicConfig.CLEANUP_POLICY_CONFIG, TopicConfig.CLEANUP_POLICY_DELETE)
                 .build();
@@ -27,8 +27,8 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic analiticaTopic() {
         return TopicBuilder.name(TOPIC_ANALITICA)
-                .partitions(2) // 2 particiones
-                .replicas(1)
+                .partitions(3) // 3 particiones
+                .replicas(3)
                 .config(TopicConfig.RETENTION_MS_CONFIG, "2592000000") // Retención de 30 días
                 .config(TopicConfig.CLEANUP_POLICY_CONFIG, TopicConfig.CLEANUP_POLICY_DELETE)
                 .build();
